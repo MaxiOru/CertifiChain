@@ -1,0 +1,55 @@
+/* Agrega esto a tu globals.css */
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 32px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2a3a5e;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+input[type="number"], input[type="text"], input[type="date"], input[type="url"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1e40af;
+}
+
+.result {
+  background: #e0f2fe;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  color: #0369a1;
+  font-size: 1rem;
+}
