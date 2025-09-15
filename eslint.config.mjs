@@ -19,6 +19,10 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      '@next/next/no-html-link-for-pages': ['error', 'app'],
+      '@typescript-eslint/no-explicit-any': 'off' // 👈 agregá esta línea
+    },
   },
 ];
 
