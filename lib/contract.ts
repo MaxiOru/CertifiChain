@@ -8,7 +8,7 @@ declare global {
 }
 
 const contractAddress = "0x8E88F5c5c8d5B356c611B87ecE1b6e4d7449Ca43"; // Reemplaza por tu address real
-const alchemyUrl = process.env.NEXT_PUBLIC_ALCHEMY_URL as string;
+const alchemyUrl = process.env.NEXT_PUBLIC_ALCHEMY_API_URL as string;
 
 // Solo lectura (consultas públicas)
 export function getReadContract() {
