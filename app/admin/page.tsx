@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { getWriteContract } from "../../lib/contract"; // Importa la función
 
 export default function Admin() {
   const [form, setForm] = useState({
@@ -18,9 +19,18 @@ export default function Admin() {
 
   const issue = async (e: any) => {
     e.preventDefault();
-    // Aquí va tu lógica de emisión al contrato
-    // Simulación:
-    if (form.to && form.Nombre_Alumno && form.Nombre_Curso) {
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const contract = await getWriteContract();
+      const tx = await contract.issueDiploma(
+        form.to,
+        form.Nombre_Alumno,
+        form.Nombre_Curso,
+        form.Tipo_Certificado,
+        form.Fecha,
+        form.uri
+      );
+      await tx.wait();
       setMensaje("¡Diploma emitido con éxito!");
       setForm({
         to: "",
@@ -30,8 +40,8 @@ export default function Admin() {
         Fecha: "",
         uri: ""
       });
-    } else {
-      setMensaje("Completa todos los campos requeridos.");
+    } catch (err: any) {
+      setMensaje("Error: " + err.message);
     }
   };
 

@@ -1,24 +1,23 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { getReadContract } from "../lib/contract"; // Importa la función real
 
 export default function Home() {
   const [tokenId, setTokenId] = useState("");
   const [diploma, setDiploma] = useState<any>(null);
+  const [mensaje, setMensaje] = useState("");
 
   const fetchDiploma = async () => {
-    // Aquí va tu lógica de consulta al contrato
-    // Simulación:
-    if (tokenId === "1") {
-      setDiploma({
-        Nombre_Alumno: "Maximiliano",
-        Nombre_Curso: "Desarrollo Blockchain con Solidity",
-        Tipo_Certificado: "aprobacion",
-        Fecha: "15/09/2025",
-        uri: "https://ejemplo.com/certificado.jpg"
-      });
-    } else {
-      setDiploma(null);
+    setMensaje("");
+    setDiploma(null);
+    try {
+      const contract = getReadContract();
+      const data = await contract.getDiploma(Number(tokenId));
+      setDiploma(data);
+      if (!data || !data.Nombre_Alumno) setMensaje("Diploma no encontrado.");
+    } catch (err: any) {
+      setMensaje("Error: " + err.message);
     }
   };
 
@@ -46,7 +45,7 @@ export default function Home() {
           />
           <button onClick={fetchDiploma}>Buscar</button>
         </div>
-        {diploma && (
+        {diploma && diploma.Nombre_Alumno && (
           <div className="result">
             <p><b>Alumno:</b> {diploma.Nombre_Alumno}</p>
             <p><b>Curso:</b> {diploma.Nombre_Curso}</p>
@@ -55,9 +54,9 @@ export default function Home() {
             <p><b>URI:</b> <a href={diploma.uri} target="_blank">{diploma.uri}</a></p>
           </div>
         )}
-        {!diploma && tokenId && (
+        {mensaje && (
           <div className="result" style={{ background: "#fee2e2", color: "#991b1b" }}>
-            Diploma no encontrado.
+            {mensaje}
           </div>
         )}
       </div>
